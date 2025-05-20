@@ -16,7 +16,22 @@ class PostsController
     }
 
     public function show(){
-        // show single post details
+         $id = $_GET['id'] ?? null;
+
+        if (!$id) {
+            echo "Post ID is missing.";
+            return;
+        }
+
+        $postModel = new Post(); 
+        $post = $postModel->find($id); 
+
+        if (!$post) {
+            echo "Post not found.";
+            return;
+        }
+
+        require_once __DIR__ . '/../../views/posts/show.php';
     }
 
     public function store(){
@@ -45,4 +60,5 @@ class PostsController
         $post->delete();
         redirect('/admin/posts');
     }
+    
 }
